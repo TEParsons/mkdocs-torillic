@@ -1,0 +1,46 @@
+name: Publish package
+
+on:
+    workflow_dispatch:
+    push:
+      tags:
+       - '*'
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        environment: pypi
+        permissions:
+          id-token: write
+        
+        steps:
+        - name: Checkout
+          uses: actions/checkout@master
+      
+        - name: Checkout base torillic
+          uses: actions/checkout@v3
+          with:
+            repository: TEParsons/torillic
+            ref: split
+            path: base
+        
+        - name: Inject base Torillic
+          run: |
+            python base/utils/stub.py
+
+        - name: Setup Python
+          uses: actions/setup-python@v3
+          with:
+            python-version: '3.10'
+        
+        - name: Install packages
+          run: |
+            python -m pip install build twine
+        
+        - name: Build
+          run: |
+            python -m build
+        
+        - name: Upload to PyPi
+          if: startsWith(github.ref, 'refs/tags/')
+          uses: pypa/gh-action-pypi-publish@release/v1
