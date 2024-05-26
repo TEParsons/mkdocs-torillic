@@ -22,11 +22,11 @@ jobs:
           with:
             repository: TEParsons/torillic
             ref: split
-            path: base
+            path: ../base
         
         - name: Inject base Torillic
           run: |
-            python base/utils/stub.py
+            python ../base/utils/stub.py
 
         - name: Setup Python
           uses: actions/setup-python@v3
