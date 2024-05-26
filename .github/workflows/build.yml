@@ -62,3 +62,5 @@ jobs:
         - name: Upload to PyPi
           if: startsWith(github.ref, 'refs/tags/')
           uses: pypa/gh-action-pypi-publish@release/v1
+          with:
+            packages-dir: main/
