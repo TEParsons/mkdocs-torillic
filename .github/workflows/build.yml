@@ -41,6 +41,18 @@ jobs:
           run: |
             python -m build
         
+        - name: Commit build
+          run: |
+            git add --all
+            git commit --all -m "sys: Build for release"
+        
+        - name: Push changes
+          uses: ad-m/github-push-action@master
+          with:
+            github_token: ${{ secrets.GITHUB_TOKEN }}
+            branch: last-release
+            force: true
+        
         - name: Upload to PyPi
           if: startsWith(github.ref, 'refs/tags/')
           uses: pypa/gh-action-pypi-publish@release/v1
