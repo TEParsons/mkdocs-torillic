@@ -26,13 +26,9 @@ jobs:
             ref: split
             path: base
         
-        - name: Navigate to current repo
-          run: |
-            cd main
-        
         - name: Inject base Torillic
           run: |
-            python ../base/utils/stub.py
+            python base/utils/stub.py
 
         - name: Setup Python
           uses: actions/setup-python@v3
@@ -45,10 +41,11 @@ jobs:
         
         - name: Build
           run: |
-            python -m build
+            python -m build ./main
         
         - name: Commit build
           run: |
+            cd main
             git add --all
             git commit --all -m "sys: Build for release"
         
