@@ -8,8 +8,8 @@ description = "Implementation of the Torillic theme for mkdocs. Convert your mar
 readme = "README.md"
 
 [project.urls]
-Homepage = "https://TEParsons.github.io/torillic"
-Download = "https://github.com/TEParsons/torillic/torillic/"
+Homepage = "https://TEParsons.github.io/mkdocs-torillic"
+Download = "https://github.com/TEParsons/mkdocs-torillic/releases"
 
 [tool.setuptools]
 packages = ["mkdocs_torillic"]
