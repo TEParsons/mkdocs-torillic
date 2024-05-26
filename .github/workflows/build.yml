@@ -46,6 +46,8 @@ jobs:
         - name: Commit build
           run: |
             cd main
+            git config --global user.email "todd.e.parsons@googlemail.com"
+            git config --global user.name "Todd Parsons"
             git add --all
             git commit --all -m "sys: Build for release"
         
