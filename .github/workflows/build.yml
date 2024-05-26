@@ -57,6 +57,7 @@ jobs:
             github_token: ${{ secrets.GITHUB_TOKEN }}
             branch: last-release
             force: true
+            directory: ./main
         
         - name: Upload to PyPi
           if: startsWith(github.ref, 'refs/tags/')
