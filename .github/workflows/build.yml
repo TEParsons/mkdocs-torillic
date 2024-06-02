@@ -43,7 +43,7 @@ jobs:
           run: |
             python -m build ./main
             cd main
-            zip -r mkdocs_torillic.zip mkdocs_torillic.zip
+            zip -r mkdocs_torillic.zip mkdocs_torillic
             cd ..
         
         - name: Commit build
