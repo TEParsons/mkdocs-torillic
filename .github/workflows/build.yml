@@ -80,6 +80,13 @@ jobs:
           with:
             tag: ${{ github.ref_name }}            
         
+        - name: Release - Build changelog
+          if: startsWith(github.ref, 'refs/tags/')
+          id: changelog
+          run: |
+            pip install GitPython packaging
+            python base/utils/changes.py "./main" ${{ github.ref_name }}
+          
         - name: Release - Format release
           if: startsWith(github.ref, 'refs/tags/')
           uses: softprops/action-gh-release@v2
@@ -89,6 +96,8 @@ jobs:
               > Torillic: A theme which styles your notes to look like the official Dungeons & Dragons 5e content books.
 
               ${{ steps.release.outputs.body }}
+
+              ${{ steps.changelog.outputs.changelog }}
 
               # To install
               Install the plugin package from PyPi:
