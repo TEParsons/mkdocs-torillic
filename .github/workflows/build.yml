@@ -63,6 +63,7 @@ jobs:
             directory: ./main
         
         - name: Release - Push changes
+          if: startsWith(github.ref, 'refs/tags/')
           uses: ad-m/github-push-action@master
           with:
             github_token: ${{ secrets.GITHUB_TOKEN }}
