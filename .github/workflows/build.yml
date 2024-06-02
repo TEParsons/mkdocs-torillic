@@ -42,6 +42,9 @@ jobs:
         - name: Build
           run: |
             python -m build ./main
+            cd main
+            zip -r mkdocs_torillic.zip mkdocs_torillic.zip
+            cd ..
         
         - name: Commit build
           run: |
@@ -55,11 +58,28 @@ jobs:
           uses: ad-m/github-push-action@master
           with:
             github_token: ${{ secrets.GITHUB_TOKEN }}
+            branch: build
+            force: true
+            directory: ./main
+        
+        - name: Release - Push changes
+          uses: ad-m/github-push-action@master
+          with:
+            github_token: ${{ secrets.GITHUB_TOKEN }}
             branch: last-release
             force: true
             directory: ./main
         
-        - name: Upload to PyPi
+        - name: Release - Upload binaries
+          if: startsWith(github.ref, 'refs/tags/')
+          uses: softprops/action-gh-release@v2
+          with:
+            token: ${{ secrets.GITHUB_TOKEN }}
+            files: |
+              main/dist/*
+              main/mkdocs_torillic.zip
+        
+        - name: Release - Upload to PyPi
           if: startsWith(github.ref, 'refs/tags/')
           uses: pypa/gh-action-pypi-publish@release/v1
           with:
