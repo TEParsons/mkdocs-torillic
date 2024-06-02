@@ -70,14 +70,38 @@ jobs:
             force: true
             directory: ./main
         
-        - name: Release - Upload binaries
+        - name: Release - Get info
+          if: startsWith(github.ref, 'refs/tags/')
+          id: release
+          uses: cardinalby/git-get-release-action@1.2.4
+          env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          with:
+            tag: ${{ github.ref_name }}            
+        
+        - name: Release - Format release
           if: startsWith(github.ref, 'refs/tags/')
           uses: softprops/action-gh-release@v2
           with:
             token: ${{ secrets.GITHUB_TOKEN }}
+            body: |
+              > Torillic: A theme which styles your notes to look like the official Dungeons & Dragons 5e content books.
+
+              ${{ steps.release.outputs.body }}
+
+              # To install
+              Install the plugin package from PyPi:
+              ```cli
+              pip install mkdocs-torillic
+              ```
+              Then, in your MkDocs project's `mkdocs.yaml` file, add:
+              ```yaml
+              theme:
+                name: torillic
+              ```
             files: |
               main/dist/*
-              main/mkdocs_torillic.zip
+              main/mkdocs_torillic.ziplin
         
         - name: Release - Upload to PyPi
           if: startsWith(github.ref, 'refs/tags/')
