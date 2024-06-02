@@ -102,7 +102,7 @@ jobs:
               ```
             files: |
               main/dist/*
-              main/mkdocs_torillic.ziplin
+              main/mkdocs_torillic.zip
         
         - name: Release - Upload to PyPi
           if: startsWith(github.ref, 'refs/tags/')
