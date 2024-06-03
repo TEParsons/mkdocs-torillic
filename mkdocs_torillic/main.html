@@ -24,22 +24,20 @@
   </header>
   <main class="torillic-page">
     {{ page.content }}
-    {% if page.file.name == "index" %}
-      {% for nav_item in nav %}
-        {% if nav_item.active and nav_item.children %}
-          <h2>Contents</h2>
-          <blockquote style="break-inside: avoid;">
-            {% for nav_subitem in nav_item.children %}
-              {% if nav_subitem.url != page.file.url %}
-                <li>
-                  <a href="{{ nav_subitem.url|url }}">{{nav_subitem.title}}</a>
-                </li>
-              {% endif %}
-            {% endfor %}
-          </blockquote>
-        {% endif %}
-      {% endfor %}
-    {% endif %}
+    {% for nav_item in nav %}
+      {% if nav_item.active and nav_item.children %}
+        <h2>Contents</h2>
+        <blockquote style="break-inside: avoid;">
+          {% for nav_subitem in nav_item.children %}
+            {% if nav_subitem.url != page.file.url %}
+              <li>
+                <a href="{{ nav_subitem.url|url }}">{{nav_subitem.title}}</a>
+              </li>
+            {% endif %}
+          {% endfor %}
+        </blockquote>
+      {% endif %}
+    {% endfor %}
   </main>
   {%- for script in config.extra_javascript %}
   {{ script | script_tag }}
