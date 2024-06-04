@@ -7,6 +7,13 @@
   {%- for path in config.extra_css %}
   <link href="{{ path | url }}" rel="stylesheet">
   {%- endfor %}
+  <style>
+    .torillic-background {
+      {% if config.theme.background_image %}
+      background-image: url("{{ config.theme.background_image | url }}");
+      {% endif %}
+    }
+  </style>
 </head>
 
 <body class="torillic-background">
