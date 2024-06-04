@@ -31,20 +31,35 @@
   </header>
   <main class="torillic-page">
     {{ page.content }}
+
+    {% if page.is_homepage %}
+    {# add global contents on the root page #}
+    <h3>Contents</h3>
     {% for nav_item in nav %}
-      {% if nav_item.active and nav_item.children %}
-        <h2>Contents</h2>
-        <blockquote style="break-inside: avoid;">
-          {% for nav_subitem in nav_item.children %}
-            {% if nav_subitem.url != page.file.url %}
-              <li>
-                <a href="{{ nav_subitem.url|url }}">{{nav_subitem.title}}</a>
-              </li>
-            {% endif %}
-          {% endfor %}
-        </blockquote>
+    {% if nav_item != page %}
+    <h4>
+      {% if nav_item.url %}
+      {% set nav_item_url = nav_item.url %}
+      {% else %}
+      {% set nav_item_url = nav_item.children[0].url %}
       {% endif %}
+      <a class="{% if nav_item.active %}current{% endif %}" href="{{ nav_item_url|url }}">{{ nav_item.title }}</a>
+    </h4>
+    {% if nav_item.children %}
+    <blockquote style="break-inside: avoid;">
+      {% for nav_subitem in nav_item.children %}
+      {% if nav_subitem.url != nav_item_url %}
+      <li>
+        <a href="{{ nav_subitem.url|url }}">{{nav_subitem.title}}</a>
+      </li>
+      {% endif %}
+      {% endfor %}
+    </blockquote>
+    {% endif %}
+    {% endif %}
     {% endfor %}
+    {% endif %}
+    
   </main>
   {%- for script in config.extra_javascript %}
   {{ script | script_tag }}
