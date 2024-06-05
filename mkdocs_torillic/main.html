@@ -30,6 +30,7 @@
     </nav>
   </header>
   <main class="torillic-page">
+    {# add page content #}
     {{ page.content }}
 
     {% if page.is_homepage %}
@@ -71,6 +72,19 @@
     {% endif %}
     
   </main>
+
+  {# add a back arrow if there's a parent to go back to #}
+  {% if page.parent %}
+  <nav>
+  {% if page.parent.url %}
+  {% set backlink = page.parent.url | url %}
+  {% else %}
+  {% set backlink = ".." %}
+  {% endif %}
+  <a href="{{backlink}}" class="backlink">🡐 {{ page.parent.title }}</a>
+  </nav>
+  {% endif %}
+  
   {%- for script in config.extra_javascript %}
   {{ script | script_tag }}
   {%- endfor %}
