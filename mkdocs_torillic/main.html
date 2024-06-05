@@ -58,6 +58,16 @@
     {% endif %}
     {% endif %}
     {% endfor %}
+    {# add local contents on parent pages #}
+    {% elif page.children %}
+    <blockquote style="break-inside: avoid;">
+      <h4>Contents</h4>
+      {% for child_page in page.children %}
+      <li>
+        <a href="{{ child_page.url|url }}">{{child_page.title}}</a>
+      </li>
+      {% endfor %}
+    </blockquote>
     {% endif %}
     
   </main>
