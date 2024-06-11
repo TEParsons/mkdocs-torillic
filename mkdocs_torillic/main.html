@@ -36,48 +36,27 @@
     {% if page.is_homepage %}
     {# add global contents on the root page #}
     <h3>Contents</h3>
-    {% for nav_item in nav %}
-    {% if nav_item != page %}
-    <h4>
-      {% if nav_item.url %}
-      {% set nav_item_url = nav_item.url %}
-      {% else %}
-      {% set nav_item_url = nav_item.children[0].url %}
-      {% endif %}
-      <a class="{% if nav_item.active %}current{% endif %}" href="{{ nav_item_url|url }}">{{ nav_item.title }}</a>
-    </h4>
-    {% if nav_item.children %}
-    <blockquote style="break-inside: avoid;">
-      {% for nav_subitem in nav_item.children %}
-      {% if nav_subitem.is_section and nav_subitem.children %}
-      {% set nav_subitem = nav_subitem.children[0] %}
-      {% endif %}
-      {% if nav_subitem.url != nav_item_url %}
-      <li>
-        <a href="{{ nav_subitem.url|url }}">{{nav_subitem.title}}</a>
-      </li>
-      {% endif %}
-      {% endfor %}
-    </blockquote>
-    {% endif %}
+    {% for target in nav %}
+    {% if target.is_section %}
+    <a href="{{ target.children[0].url | url }}">
+      <h4>{{ target.title }}</h4>
+    </a>
+    {% include "partials/contents_block.html" %}
+    {% elif target != page %}
+    <a href="{{ target.url | url }}">
+      <h4>{{ target.title }}</h4>
+    </a>
     {% endif %}
     {% endfor %}
-    {# add local contents on section home pages #}
+
     {% elif page.parent and page.parent.is_section and page.parent.children[0] == page %}
+    {# add local contents on section home pages #}
+    {% set target = page.parent %}
     <h4>Contents</h4>
-    <blockquote style="break-inside: avoid;">
-      {% for child_page in page.parent.children %}
-      {% if child_page.is_section and child_page.children %}
-      {% set child_page = child_page.children[0] %}
-      {% endif %}
-      {% if child_page != page %}
-      <li>
-        <a href="{{ child_page.url|url }}">{{child_page.title}}</a>
-      </li>
-      {% endif %}
-      {% endfor %}
-    </blockquote>
+    {% include "partials/contents_block.html" %}
+
     {% endif %}
+
     
   </main>
 

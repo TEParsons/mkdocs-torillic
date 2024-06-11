@@ -1,0 +1,9 @@
+<blockquote style="break-inside: avoid;">
+    {% for item in target.children %}
+    {% if item != target.children[0] or not target.is_section %}
+    <li>
+        <a href="{% if item.is_section %}{{ item.children[0].url | url }}{% else %}{{ item.url | url }}{% endif %}">{{ item.title }}</a>
+    </li>
+    {% endif %}
+    {% endfor %}
+</blockquote>
