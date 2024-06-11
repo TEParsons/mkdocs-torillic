@@ -49,6 +49,9 @@
     {% if nav_item.children %}
     <blockquote style="break-inside: avoid;">
       {% for nav_subitem in nav_item.children %}
+      {% if nav_subitem.is_section and nav_subitem.children %}
+      {% set nav_subitem = nav_subitem.children[0] %}
+      {% endif %}
       {% if nav_subitem.url != nav_item_url %}
       <li>
         <a href="{{ nav_subitem.url|url }}">{{nav_subitem.title}}</a>
@@ -64,6 +67,9 @@
     <h4>Contents</h4>
     <blockquote style="break-inside: avoid;">
       {% for child_page in page.parent.children %}
+      {% if child_page.is_section and child_page.children %}
+      {% set child_page = child_page.children[0] %}
+      {% endif %}
       {% if child_page != page %}
       <li>
         <a href="{{ child_page.url|url }}">{{child_page.title}}</a>
