@@ -38,14 +38,14 @@
     <h3>Contents</h3>
     {% for target in nav %}
     {% if target.is_section %}
-    <a href="{{ target.children[0].url | url }}">
-      <h4>{{ target.title }}</h4>
-    </a>
+    <h4>
+      <a href="{{ target.children[0].url | url }}">{{ target.title }}</a>
+    </h4>
     {% include "partials/contents_block.html" %}
     {% elif target != page %}
-    <a href="{{ target.url | url }}">
-      <h4>{{ target.title }}</h4>
-    </a>
+    <h4>
+      <a href="{{ target.url | url }}">{{ target.title }}</a>
+    </h4>
     {% endif %}
     {% endfor %}
 
