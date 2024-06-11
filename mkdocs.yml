@@ -7,18 +7,9 @@ theme:
 docs_dir: docs_src
 site_dir: docs
 # tell mkdocs what links to put in the nav bar
-# for bigger wikis, I suggest using something like the `literate-nav` plugin to generate this dynamically
+# (... tells to awesome-pages plugin to generate from files)
 nav:
-  - Home: index.md
-  - Bandit encounter:
-    - Home: bandits/index.md
-    - Bandit: bandits/Bandit.md
-    - Bandit Captain: bandits/Bandit Captain.md
-  - Dragon encounter:
-    - Home: dragon/index.md
-    - Adult Blue Dragon: dragon/Adult Blue Dragon.md
-    - Cultist: dragon/Cultist.md
-    - Kobold: dragon/Kobold.md
+  - ...
 # tell mkdocs what to ignore (like those annoying junk files Google Drive makes)
 exclude_docs: |
   desktop.ini
@@ -26,3 +17,7 @@ exclude_docs: |
 markdown_extensions:
   # "new line to break" - means it keeps single line breaks in the built html
   - nl2br
+# tell mkdocs what plugins to use
+plugins:
+  # awesome-pages works well Torillic's contents pages as it allows an automatic nav to be generated from file structure
+  - awesome-pages
