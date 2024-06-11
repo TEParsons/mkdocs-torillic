@@ -59,14 +59,16 @@
     {% endif %}
     {% endif %}
     {% endfor %}
-    {# add local contents on parent pages #}
-    {% elif page.children %}
+    {# add local contents on section home pages #}
+    {% elif page.parent and page.parent.is_section and page.parent.children[0] == page %}
+    <h4>Contents</h4>
     <blockquote style="break-inside: avoid;">
-      <h4>Contents</h4>
-      {% for child_page in page.children %}
+      {% for child_page in page.parent.children %}
+      {% if child_page != page %}
       <li>
         <a href="{{ child_page.url|url }}">{{child_page.title}}</a>
       </li>
+      {% endif %}
       {% endfor %}
     </blockquote>
     {% endif %}
@@ -74,14 +76,18 @@
   </main>
 
   {# add a back arrow if there's a parent to go back to #}
-  {% if page.parent %}
+  {% set backlink_target = page.parent %}
+  {% if backlink_target and backlink_target.is_section and page == backlink_target.children[0] %}
+  {% set backlink_target = backlink_target.parent %}
+  {% endif %}
+  {% if backlink_target %}
   <nav>
   {% if page.parent.url %}
   {% set backlink = page.parent.url | url %}
   {% else %}
   {% set backlink = ".." %}
   {% endif %}
-  <a href="{{backlink}}" class="backlink">🡐 {{ page.parent.title }}</a>
+  <a href="{{backlink}}" class="torillic-backlink">🡐 {{ page.parent.title }}</a>
   </nav>
   {% endif %}
   
