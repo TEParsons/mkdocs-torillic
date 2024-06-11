@@ -18,7 +18,7 @@ jobs:
     
     - name: Install dependencies
       run: |
-        python3 -m pip install mkdocs mkdocs-torillic
+        python3 -m pip install mkdocs mkdocs-torillic mkdocs-awesome-pages-plugin
     
     - name: Build docs
       run: |
