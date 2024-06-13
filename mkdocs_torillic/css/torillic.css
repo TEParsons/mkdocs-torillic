@@ -23,3 +23,14 @@ body {
     text-decoration: underline;
     text-decoration-color: var(--yellow);
 }
+
+.torillic-header nav {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem 1cm;
+    font-family: var(--head);
+    font-size: 1.5rem;
+    width: 21cm;
+}
