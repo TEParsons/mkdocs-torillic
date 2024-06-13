@@ -10,18 +10,15 @@ body {
 }
 
 .torillic-backlink {
-    display: block;
+    position: absolute;
+    top: 1cm;
+    left: 2cm;
     text-decoration: none;
-    color: white;
-    font-size: 1.5rem;
-    width: 23cm;
-    padding: 0 1cm;
-    margin: auto;
+    opacity: 20%;
 }
 .torillic-backlink:hover {
-    color: white;
-    text-decoration: underline;
-    text-decoration-color: var(--yellow);
+    color: var(--red);
+    opacity: 100%;
 }
 
 .torillic-header nav {

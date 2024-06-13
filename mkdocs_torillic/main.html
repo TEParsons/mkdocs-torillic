@@ -57,24 +57,18 @@
 
     {% endif %}
 
+    {# add a back arrow if there's a parent to go back to #}
+    {% set backlink_target = page.parent %}
+    {% if backlink_target and backlink_target.is_section and page == backlink_target.children[0] %}
+    {% set backlink_target = backlink_target.parent %}
+    {% endif %}
+
+    {% if backlink_target %}
+    <a href="{{backlink_target.url | url}}" class="torillic-backlink">🡐 {{ backlink_target.title }}</a>
+    {% endif %}
+
     
   </main>
-
-  {# add a back arrow if there's a parent to go back to #}
-  {% set backlink_target = page.parent %}
-  {% if backlink_target and backlink_target.is_section and page == backlink_target.children[0] %}
-  {% set backlink_target = backlink_target.parent %}
-  {% endif %}
-  {% if backlink_target %}
-  <nav>
-  {% if page.parent.url %}
-  {% set backlink = page.parent.url | url %}
-  {% else %}
-  {% set backlink = ".." %}
-  {% endif %}
-  <a href="{{backlink}}" class="torillic-backlink">🡐 {{ page.parent.title }}</a>
-  </nav>
-  {% endif %}
   
   {%- for script in config.extra_javascript %}
   {{ script | script_tag }}
