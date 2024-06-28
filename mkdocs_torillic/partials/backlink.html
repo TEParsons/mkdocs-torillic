@@ -1,0 +1,21 @@
+{% if page == page.parent.children[0] %}
+    {# if page is a section homepage... #}
+    {% if page.parent.parent %}
+        {# section homepages go to their grandparent #}
+        {% set backlink_title = page.parent.parent.title %}
+    {% else %}
+        {# ...apart from top level sections #}
+        {% set backlink_title = "Home" %}
+    {% endif %}
+{% else %}
+    {# if page is just a page... #}
+    {% if page.pare %}
+        {# pages go to their parent #}
+        {% set backlink_title = page.parent.title %}
+    {% else %}
+        {# ...apart from top level pages #}
+        {% set backlink_title = "Home" %}
+    {% endif %}
+{% endif %}
+
+<a href=".." class="torillic-backlink">🡐 {{ backlink_title }}</a>
