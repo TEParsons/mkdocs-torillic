@@ -33,30 +33,16 @@
     {# add page content #}
     {{ page.content }}
 
-    {% if page.is_homepage %}
-    {# add global contents on the root page #}
-    <h3>Contents</h3>
-    {% for target in nav %}
-    {% if target.is_section %}
-    <h4>
-      <a href="{{ target.children[0].url | url }}">{{ target.title }}</a>
-    </h4>
-    {% include "partials/contents_block.html" %}
-    {% elif target != page %}
-    <h4>
-      <a href="{{ target.url | url }}">{{ target.title }}</a>
-    </h4>
-    {% endif %}
-    {% endfor %}
+    {# add global contents on the root page, unless told not to #}
+    {% if page.meta.contents == "global" or ( page.is_homepage and page.meta.contents not in ("local", "none") )  %}
+    {% include "partials/global_contents.html" %}
 
-    {% elif page.parent and page.parent.is_section and page.parent.children[0] == page %}
-    {# add local contents on section home pages #}
-    {% set target = page.parent %}
-    <h4>Contents</h4>
-    {% include "partials/contents_block.html" %}
+    {# add local contents on section homepages, unless told not to #}
+    {% elif page.meta.contents == "local" or ( page.parent and page == page.parent.children[0] and page.meta.contents not in ("global", "none") ) %}
+    {% include "partials/local_contents.html" %}
 
     {% endif %}
-
+    
     {# add a back arrow if there's a parent to go back to #}
     {% set backlink_target = page.parent %}
     {% if backlink_target and backlink_target.is_section and page == backlink_target.children[0] %}

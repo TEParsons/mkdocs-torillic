@@ -1,0 +1,42 @@
+
+{# sort children into pages and sections #}
+{% set nav_sections = [] %}
+{% set nav_pages = [] %}
+
+{% for item in nav %}
+    {% if item.is_section %}
+        {{ nav_sections.append(item) }}
+    {% elif item != page %}
+        {{ nav_pages.append(item) }}
+    {% endif %}
+{% endfor %}
+
+{# add heading #}
+<h3>Contents</h3>
+
+{# add standalone pages first #}
+{% if nav_pages|length %}
+<blockquote style="break-inside: avoid;">
+    {% for item in nav_pages %}
+    <li>
+        <a href="{{ item.url | url }}">{{ item.title }}</a>
+    </li>
+    {% endfor %}
+</blockquote>
+{% endif %}
+
+{# add sections #}
+{% for item in nav_sections %}
+<h4>
+    <a href="{{ item.children[0].url | url }}">{{ item.title }}</a>
+</h4>
+<blockquote style="break-inside: avoid;">
+    {% for subitem in item.children %}
+        {% if subitem != item.children[0] %}
+    <li>
+        <a href="{% if subitem.is_section %}{{ subitem.children[0].url | url }}{% else %}{{ subitem.url | url }}{% endif %}">{{ subitem.title }}</a>
+    </li>
+        {% endif %}
+    {% endfor %}
+</blockquote>
+{% endfor %}
