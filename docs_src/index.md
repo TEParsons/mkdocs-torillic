@@ -1,5 +1,6 @@
 ---
 title: Home
+contents: global
 ---
 
 # Torillic example wiki
