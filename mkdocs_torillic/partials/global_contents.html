@@ -1,13 +1,11 @@
+{% set items = namespace(sections=[], pages=[]) %}
 
 {# sort children into pages and sections #}
-{% set nav_sections = [] %}
-{% set nav_pages = [] %}
-
 {% for item in nav %}
     {% if item.is_section %}
-        {{ nav_sections.append(item) }}
+        {% set items.sections = items.sections + [item] %}
     {% elif item != page %}
-        {{ nav_pages.append(item) }}
+        {% set items.pages = items.pages + [item] %}
     {% endif %}
 {% endfor %}
 
@@ -17,7 +15,7 @@
 {# add standalone pages first #}
 {% if nav_pages|length %}
 <blockquote style="break-inside: avoid;">
-    {% for item in nav_pages %}
+    {% for item in items.pages %}
     <li>
         <a href="{{ item.url | url }}">{{ item.title }}</a>
     </li>
@@ -26,7 +24,7 @@
 {% endif %}
 
 {# add sections #}
-{% for item in nav_sections %}
+{% for item in items.sections %}
 <h4>
     <a href="{{ item.children[0].url | url }}">{{ item.title }}</a>
 </h4>
