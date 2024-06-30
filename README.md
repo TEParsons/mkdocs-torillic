@@ -11,7 +11,7 @@ Supply either a file path or a web link to an image to use for the site's backgr
 ## Page configuration
 Torillic accepts the following configuration options from an individual page's yaml frontmatter:
 ### `contents`
-Whether to include a block and, if so, what kind. Options are:
+Whether to include a contents block and, if so, what kind. Options are:
 - `global`: Include a "global" contents block, i.e. one which describes the entire site
 - `local`: Include a local contents block, i.e. one which describes the current page's children / siblings
 - `none`: Do not include a contents block
