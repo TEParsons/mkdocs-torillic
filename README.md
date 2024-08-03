@@ -28,4 +28,4 @@ If not supplied, the site homepage will have global contents block and section h
 ***Name.*** *Attack Type:* +[modifier] to hit, reach [reach] ft., [n targets] target(s). *Hit:* [approx damage] ([n dice]d[die size] + [additional]) [damage type] damage.
 ```
 - For an example of a full stat sheet in Torillic, check out the markdown below the screenshots.
-- Ultimately, it's yours to play with, so feel free to completely ignore this advice and lay things out however works for your capaign!
+- Ultimately, it's yours to play with, so feel free to completely ignore this advice and lay things out however works for your campaign!
