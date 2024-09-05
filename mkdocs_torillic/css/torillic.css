@@ -30,4 +30,5 @@ body {
     font-family: var(--head);
     font-size: 1.5rem;
     width: 21cm;
+    max-width: calc(100% - 4cm - 8rem);
 }
