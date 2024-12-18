@@ -15,6 +15,8 @@ Whether to include a contents block and, if so, what kind. Options are:
 - `global`: Include a "global" contents block, i.e. one which describes the entire site
 - `local`: Include a local contents block, i.e. one which describes the current page's children / siblings
 - `none`: Do not include a contents block
+### `extra.home_name`
+Can be set to change the name of the home link on content pages. Default: `Home`
 
 If not supplied, the site homepage will have global contents block and section home pages will have a local contents block, other pages will not include a contents block.
 
