@@ -10,7 +10,7 @@
 {% endfor %}
 
 {# add heading #}
-<h3>Contents</h3>
+<h3>{{config.extra.toc_heading or "Contents"}}</h3>
 
 {# add standalone pages first #}
 {% if nav_pages|length %}
