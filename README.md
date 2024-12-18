@@ -7,6 +7,8 @@ This theme, named after the fantasy setting of [Dungeons & Dragons](https://www.
 Torillic accepts the following theme configuration options in the `mkdocs.yaml` file:
 ### `background_image`
 Supply either a file path or a web link to an image to use for the site's background. If not supplied, will use the defaut Torillic background (wood planks).
+### `extra.toc_heading`
+Can be set to change the title of all content blocks. Default: `Contents`
 
 ## Page configuration
 Torillic accepts the following configuration options from an individual page's yaml frontmatter:
