@@ -1,6 +1,6 @@
 
 {# add heading #}
-<h4>Contents</h4>
+<h4>{{config.extra.toc_heading or "Contents"}}</h4>
 {# add child pages #}
 <blockquote style="break-inside: avoid;">
 {% for item in page.parent.children %}
