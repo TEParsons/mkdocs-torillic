@@ -1,21 +1,28 @@
-{% if page == page.parent.children[0] %}
-    {# if page is a section homepage... #}
+{# use a namespace so that we can set stuff within a for loop #}
+{% set backlink = namespace(target=None) %}
+
+{% if page.is_index %}
     {% if page.parent.parent %}
         {# section homepages go to their grandparent #}
-        {% set backlink_title = page.meta.backlink or config.extra.backlink or page.parent.parent.title %}
+        {% set backlink.target = page.parent.parent %}
     {% else %}
-        {# ...apart from top level sections #}
-        {% set backlink_title = page.meta.backlink or config.extra.home_name or config.extra.backlink or "Home" %}
+        {# top-level section homepages go to the site home #}
+        {% set backlink.target = nav.homepage %}
     {% endif %}
 {% else %}
-    {# if page is just a page... #}
     {% if page.parent %}
-        {# pages go to their parent #}
-        {% set backlink_title = page.meta.backlink or config.extra.backlink or page.parent.title %}
+        {# regular pages go to their parent #}
+        {% set backlink.target = page.parent %}
     {% else %}
-        {# ...apart from top level pages #}
-        {% set backlink_title = page.meta.backlink or config.extra.home_name or config.extra.backlink or "Home" %}
+        {# top-level pages go to the site home #}
+        {% set backlink.target = nav.homepage %}
     {% endif %}
 {% endif %}
+{# if backlink has an index page, target that instead #}
+{% if backlink.target.is_section %}
+    {% for backlink_sibling in backlink.target.children if backlink_sibling.is_index %}
+        {% set backlink.target = backlink_sibling %}
+    {% endfor %}
+{% endif %}
 
-<a href=".." class="torillic-backlink">🡐 {{ backlink_title }}</a>
+<a href="{{ backlink.target.url | url }}" class="torillic-backlink">🡐 {{ backlink.target.title }}</a>
