@@ -17,6 +17,10 @@ Torillic accepts the following theme configuration options in the `mkdocs.yaml` 
 Supply either a file path or a web link to an image to use for the site's background. If not supplied, will use the defaut Torillic background (wood planks).
 ### `extra.toc_heading`
 Can be set to change the title of all content blocks. Default: `Contents`
+### `extra.backlink`
+Can be set to change the name of all the links that take you one layer up. Default: The name of the page it links to or `Home` for first level pages.
+### `extra.home_name`
+Can be set to change the name of the home link on content pages. Overrides `extra.backlink` for these pages. Default: `Home`
 
 ## Page configuration
 Torillic accepts the following configuration options from an individual page's yaml frontmatter:
@@ -27,6 +31,9 @@ Whether to include a contents block and, if so, what kind. Options are:
 - `none`: Do not include a contents block
 
 If not supplied, the site homepage will have global contents block and section home pages will have a local contents block, other pages will not include a contents block.
+
+### `backlink`
+Can be set to change the name of the link that takes you one layer up. Stronger than any global setting.
 
 ## Tips & Tricks
 

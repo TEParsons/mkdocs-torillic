@@ -2,19 +2,19 @@
     {# if page is a section homepage... #}
     {% if page.parent.parent %}
         {# section homepages go to their grandparent #}
-        {% set backlink_title = page.parent.parent.title %}
+        {% set backlink_title = page.meta.backlink or config.extra.backlink or page.parent.parent.title %}
     {% else %}
         {# ...apart from top level sections #}
-        {% set backlink_title = "Home" %}
+        {% set backlink_title = page.meta.backlink or config.extra.home_name or config.extra.backlink or "Home" %}
     {% endif %}
 {% else %}
     {# if page is just a page... #}
-    {% if page.pare %}
+    {% if page.parent %}
         {# pages go to their parent #}
-        {% set backlink_title = page.parent.title %}
+        {% set backlink_title = page.meta.backlink or config.extra.backlink or page.parent.title %}
     {% else %}
         {# ...apart from top level pages #}
-        {% set backlink_title = "Home" %}
+        {% set backlink_title = page.meta.backlink or config.extra.home_name or config.extra.backlink or "Home" %}
     {% endif %}
 {% endif %}
 
