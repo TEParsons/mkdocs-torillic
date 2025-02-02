@@ -1,0 +1,34 @@
+@import url("torillic/torillic.css");
+
+body {
+    padding: 0;
+    margin: 0;
+}
+
+.torillic-background {
+    padding: 4rem;
+}
+
+.torillic-backlink {
+    position: absolute;
+    top: 1cm;
+    left: 2cm;
+    text-decoration: none;
+    opacity: 20%;
+}
+.torillic-backlink:hover {
+    color: var(--red);
+    opacity: 100%;
+}
+
+.torillic-header nav {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem 1cm;
+    font-family: var(--head);
+    font-size: 1.5rem;
+    width: 21cm;
+    max-width: calc(100% - 4cm - 8rem);
+}
