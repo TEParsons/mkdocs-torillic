@@ -5,11 +5,24 @@ body {
     margin: 0;
 }
 
-li.torillic-contents-section::marker {
+blockquote.torillic-toc {
+    display: flex;
+    flex-direction: column;
+    break-inside: avoid;
+}
+
+li.torillic-toc-section {
+    order: 1;
+}
+li.torillic-toc-section::marker {
     content: ">";
     font-weight: bold;
 }
-li.torillic-contents-page::marker {
+
+li.torillic-toc-page {
+    order: 2
+}
+li.torillic-toc-page::marker {
     content: "-";
     font-weight: bold;
 }

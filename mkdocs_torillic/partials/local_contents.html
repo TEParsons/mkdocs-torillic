@@ -2,7 +2,7 @@
 {# add heading #}
 <h4>{{config.extra.toc_heading or "Contents"}}</h4>
 {# add child pages #}
-<blockquote style="break-inside: avoid;">
+<blockquote class=torillic-toc>
 {% for item in page.parent.children %}
     {# use a namespace so that we can set stuff within a sub-for loop #}
     {% set index = namespace(obj=item, icon="page") %}
@@ -15,7 +15,7 @@
     {% endif %}
     {# create list item #}
     {% if item != page.parent.children[0] %}
-    <li class="torillic-contents-{{ index.icon }}">
+    <li class="torillic-toc-{{ index.icon }}">
         <a href="{{ index.obj.url | url }}">{{ index.obj.title }}</a>
     </li>
     {% endif %}

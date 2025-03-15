@@ -28,7 +28,7 @@
 <h4>
     <a href="{{ item.children[0].url | url }}">{{ item.title }}</a>
 </h4>
-<blockquote style="break-inside: avoid;">
+<blockquote class=torillic-toc>
     {% for subitem in item.children %}
         {# use a namespace so that we can set stuff within a sub-for loop #}
         {% set index = namespace(obj=subitem) %}
@@ -41,7 +41,7 @@
         {% endif %}
         {# create list item #}
         {% if subitem != item.children[0] %}
-    <li class="torillic-contents-{{ index.icon }}">
+    <li class="torillic-toc-{{ index.icon }}">
         <a href="{{ index.obj.url | url }}">{{ index.obj.title }}</a>
     </li>
         {% endif %}
