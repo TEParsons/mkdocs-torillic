@@ -5,6 +5,11 @@ body {
     margin: 0;
 }
 
+li.torillic-contents-section::marker {
+    content: ">";
+    font-weight: bold;
+}
+
 .torillic-background {
     padding: 4rem;
 }

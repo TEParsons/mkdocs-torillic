@@ -34,13 +34,14 @@
         {% set index = namespace(obj=subitem) %}
         {# if subitem is a section, navigate to its index page #}
         {% if subitem.is_section %}
+            {% set index.icon = "section" %}
             {% for child in subitem.children if child.is_index %}
                 {% set index.obj = child %}
             {% endfor %}
         {% endif %}
         {# create list item #}
         {% if subitem != item.children[0] %}
-    <li>
+    <li class="torillic-contents-{{ index.icon }}">
         <a href="{{ index.obj.url | url }}">{{ index.obj.title }}</a>
     </li>
         {% endif %}
