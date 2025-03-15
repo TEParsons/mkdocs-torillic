@@ -9,6 +9,10 @@ li.torillic-contents-section::marker {
     content: ">";
     font-weight: bold;
 }
+li.torillic-contents-page::marker {
+    content: "-";
+    font-weight: bold;
+}
 
 .torillic-background {
     padding: 4rem;
