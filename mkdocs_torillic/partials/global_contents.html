@@ -31,7 +31,7 @@
 <blockquote class=torillic-toc>
     {% for subitem in item.children %}
         {# use a namespace so that we can set stuff within a sub-for loop #}
-        {% set index = namespace(obj=subitem) %}
+        {% set index = namespace(obj=item, icon="page") %}
         {# if subitem is a section, navigate to its index page #}
         {% if subitem.is_section %}
             {% set index.icon = "section" %}
