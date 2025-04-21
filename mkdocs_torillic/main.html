@@ -16,6 +16,16 @@
       {% endif %}
     }
   </style>
+  <script>
+    function toggleSpoiler(element) {
+      // add/remove "hidden" class
+      if (element.classList.contains("hidden")) {
+        element.classList.remove("hidden");
+      } else {
+        element.classList.add("hidden");
+      }
+    }
+  </script>
 </head>
 
 <body class="torillic-background">

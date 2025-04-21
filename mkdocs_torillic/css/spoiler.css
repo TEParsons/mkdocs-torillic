@@ -1,0 +1,23 @@
+.spoiler {
+    --spoiler-color: var(--green);
+    border: 1px solid var(--spoiler-color);
+    position: relative;
+  }
+  .spoiler.hidden {
+    color: var(--spoiler-color);
+    background-color: var(--spoiler-color);
+  }
+  .spoiler.hidden::selection {
+    color: var(--spoiler-color);
+    background-color: transparent;
+  }
+  .spoiler.hidden::after {
+    content: "Click to reveal spoiler";
+    font-family: var(--header);
+    font-weight: bold;
+    color: var(--red);
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }

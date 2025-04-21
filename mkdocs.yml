@@ -27,3 +27,5 @@ plugins:
   - torillic-statblock
   # the torillic-ipa plugin enables the use of International Phonetic Alphabet pronunciation guide links
   - torillic-ipa
+  # the torillic-spoiler plugin enables the use of hide-able spoiler elements
+  - torillic-spoiler

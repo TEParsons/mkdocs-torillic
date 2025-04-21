@@ -5,7 +5,9 @@ Blue dragons make their lairs in barren places, using their lightning breath and
 
 Thunderstorms rage around a legendary blue dragon’s lair, and narrow tubes lined with glassy sand ventilate the lair, all the while avoiding the deadly sinkholes that are the dragon’s first line of defense.
 
+```spoiler
 A blue dragon will collapse the caverns that make up its lair if that lair is invaded. The dragon then burrows out, leaving its attackers to be crushed and suffocated. When it returns later, it collects its possessions — along with the wealth of the dead intruders.
+```
 
 ![Ancient Blue Dragon - Monsters - Archives of Nethys: Pathfinder ...](https://2e.aonprd.com/Images/Monsters/DragonBlue_AncientBlueDragon.png)
 
