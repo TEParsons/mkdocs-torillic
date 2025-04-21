@@ -1,35 +1,32 @@
-name: Publish docs
-
-on: push
-
+name: Pages
+on:
+  push:
+    branches:
+    - main
 jobs:
   build:
-    name: Build docs
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout
-      uses: actions/checkout@v4
-
-    - name: Set up Python
-      uses: actions/setup-python@v4
+    - name: Setup Python
+      uses: actions/setup-python@v2
+    - name: Checkout branch
+      uses: actions/checkout@master
       with:
-        python-version: "3.10"
-    
-    - name: Install dependencies
+        fetch-depth: 0 # otherwise, you will failed to push refs to dest repo
+    - name: Dependencies
       run: |
-        python3 -m pip install mkdocs mkdocs-torillic mkdocs-awesome-pages-plugin
-    
-    - name: Build docs
+        python -m pip install --upgrade pip
+        pip install mkdocs mkdocs-torillic mkdocs-awesome-pages-plugin
+    - name: Build
       run: |
         mkdocs build
-    
     - name: Commit
       run: |
+        git config --global user.email "todd.e.parsons@googlemail.com"
+        git config --global user.name "Todd Parsons"
         git add --all
-        git commit --all -m "sys: Build documentation"
-    
-    - name: Push
+        git commit --all -m "Build"
+    - name: Push changes
       uses: ad-m/github-push-action@master
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
