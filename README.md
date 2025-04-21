@@ -24,6 +24,54 @@ Installing mkdocs-torillic now adds optional plugins to mkdocs:
 ### torillic-statblock
 Recognises any code blocks whose language is `statblock` as a statblock and styles it as an expandable panel. You can also add the name of the game system after the word `statblock` (separated by a `:`) to alter the label created (e.g. `statblock:5e` will create an expandable stat block labelled "Statblock (5e)"). As with other elements, you can use `{.full-width}` to create a full-width statblock with columns inside, rather than sitting in a column.
 
+For example, here's a statblock for a Kobold in D&D 5e:
+```
+\```statblock:5e
+### Kobold
+*Small Humanoid (Kobold), Lawful Evil*
+
+---
+
+**Armor Class** 12
+**Hit Points** 5 (2d6 - 2)
+**Speed** 30 ft.
+
+---
+
+| STR  | DEX  | CON  | INT  | WIS  | CHA  |
+|------|------|------|------|------|------|
+| 7    | 15   | 9    | 8    | 7    | 8    |
+| (-2) | (+2) | (-1) | (-1) | (-2) | (-1) |
+
+---
+
+**Senses** [Darkvision](https://www.dndbeyond.com/compendium/rules/basic-rules/monsters#Darkvision) 60 ft., Passive Perception 8
+**Languages** Common, Draconic
+**Challenge** 1/8 (25 XP)
+
+---
+
+***Sunlight Sensitivity.*** While in sunlight, the kobold has disadvantage on attack rolls, as well as on Wisdom ([Perception](https://www.dndbeyond.com/compendium/rules/basic-rules/using-ability-scores#Perception)) checks that rely on sight.
+
+***Pack Tactics.*** The kobold has advantage on an attack roll against a creature if at least one of the kobold's allies is within 5 feet of the creature and the ally isn't [incapacitated](https://www.dndbeyond.com/compendium/rules/basic-rules/appendix-a-conditions#Incapacitated).
+
+#### Actions
+
+***Dagger.** Melee Weapon Attack:* +4 to hit, reach 5 ft., one target. *Hit:* 4 (1d4 + 2) piercing damage.
+
+***Sling.** Ranged Weapon Attack:* +4 to hit, range 30/120 ft., one target. *Hit:* 4 (1d4 + 2) bludgeoning damage.
+\```
+```
+
+### torillic-ipa
+Recognises content inbetween two `/` as International Phonetic Alphabet (IPA) and adds a link to it in [IPA Reader](https://ipa-reader.xyz), making it super easy to add pronunciation guides in your notes. 
+
+For example, if you wanted to add a pronunciation guide for the word Torillic, you would do:
+
+```
+/tɔrɪlɪk/
+```
+
 ## Page configuration
 Torillic accepts the following configuration options from an individual page's yaml frontmatter:
 ### `contents`
