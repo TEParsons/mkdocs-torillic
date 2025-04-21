@@ -1,6 +1,6 @@
 [project]
 name = "mkdocs-torillic"
-version = "2.3.17"
+version = "2.4.0"
 authors = [
     {name = "Todd Parsons", email = "todd.e.parsons@gmail.com"}
 ]
@@ -19,3 +19,6 @@ mkdocs_torillic = ["**/*.html", "**/*.css", "**/*.yml", "**/*.jpg", "**/*.png", 
 
 [project.entry-points."mkdocs.themes"]
 torillic = "mkdocs_torillic"
+
+[project.entry-points."mkdocs.plugins"]
+torillic-statblock = "mkdocs_torillic.plugins:TorillicStatblockPlugin"

@@ -17,7 +17,11 @@ exclude_docs: |
 markdown_extensions:
   # "new line to break" - means it keeps single line breaks in the built html
   - nl2br
+  # in order for stat blocks to render correctly, "Markdown in HTML" needs to be enabled
+  - md_in_html 
 # tell mkdocs what plugins to use
 plugins:
   # awesome-pages works well Torillic's contents pages as it allows an automatic nav to be generated from file structure
   - awesome-pages
+  # the torillic-statblock plugin enables the "statblock" language for code blocks
+  - torillic-statblock

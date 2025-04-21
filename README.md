@@ -18,6 +18,12 @@ Supply either a file path or a web link to an image to use for the site's backgr
 ### `extra.toc_heading`
 Can be set to change the title of all content blocks. Default: `Contents`
 
+## Plugins
+Installing mkdocs-torillic now adds optional plugins to mkdocs:
+
+### torillic-statblock
+Recognises any code blocks whose language is `statblock` as a statblock and styles it as an expandable panel. You can also add the name of the game system after the word `statblock` (separated by a `:`) to alter the label created (e.g. `statblock:5e` will create an expandable stat block labelled "Statblock (5e)"). As with other elements, you can use `{.full-width}` to create a full-width statblock with columns inside, rather than sitting in a column.
+
 ## Page configuration
 Torillic accepts the following configuration options from an individual page's yaml frontmatter:
 ### `contents`
