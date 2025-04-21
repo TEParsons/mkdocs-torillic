@@ -57,3 +57,13 @@ li.torillic-toc-page::marker {
     width: 21cm;
     max-width: calc(100% - 4cm - 8rem);
 }
+
+
+@media print {
+    .torillic-backlink {
+        display: none;
+    }
+    .torillic-header {
+        display: none;
+    }
+}
