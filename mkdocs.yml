@@ -25,3 +25,5 @@ plugins:
   - awesome-pages
   # the torillic-statblock plugin enables the "statblock" language for code blocks
   - torillic-statblock
+  # the torillic-ipa plugin enables the use of International Phonetic Alphabet pronunciation guide links
+  - torillic-ipa

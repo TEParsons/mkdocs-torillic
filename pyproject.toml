@@ -22,3 +22,4 @@ torillic = "mkdocs_torillic"
 
 [project.entry-points."mkdocs.plugins"]
 torillic-statblock = "mkdocs_torillic.plugins:TorillicStatblockPlugin"
+torillic-ipa = "mkdocs_torillic.plugins:TorillicIPAPlugin"
