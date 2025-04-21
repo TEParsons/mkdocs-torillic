@@ -13,10 +13,12 @@ Alternatively, you can clone/download this repo and either store it in your Pyth
 
 ## Theme configuration
 Torillic accepts the following theme configuration options in the `mkdocs.yaml` file:
+
 ### `background_image`
 Supply either a file path or a web link to an image to use for the site's background. If not supplied, will use the defaut Torillic background (wood planks).
-### `extra.toc_heading`
-Can be set to change the title of all content blocks. Default: `Contents`
+
+### `favicon`
+Supply either a file path or a web link to an image to use for this site's favicon (the image on the tab in your browser). By default, will use the Torillic logo (wireframe of a D20).
 
 ## Plugins
 Installing mkdocs-torillic now adds optional plugins to mkdocs:

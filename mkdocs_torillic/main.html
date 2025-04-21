@@ -4,6 +4,7 @@
 <head>
   <meta charset="utf-8">
   <title>{% if page.title %}{{ page.title }} - {% endif %}{{ config.site_name }}</title>
+  <link rel="icon" type="image/x-icon" href="{{ config.theme.favicon | url }}">
   <link href="{{ 'css/torillic.css'|url }}" rel="stylesheet">
   {%- for path in config.extra_css %}
   <link href="{{ path | url }}" rel="stylesheet">
