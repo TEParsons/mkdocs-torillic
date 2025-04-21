@@ -1,0 +1,6 @@
+.ipa::before {
+    content: "/";
+}
+.ipa::after {
+    content: "/";
+}

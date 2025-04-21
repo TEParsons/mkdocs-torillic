@@ -1,0 +1,23 @@
+
+{# add heading #}
+<h4>{{config.extra.toc_heading or "Contents"}}</h4>
+{# add child pages #}
+<blockquote class=torillic-toc>
+{% for item in page.parent.children %}
+    {# use a namespace so that we can set stuff within a sub-for loop #}
+    {% set index = namespace(obj=item, icon="page") %}
+    {# if item is a section, navigate to its index page #}
+    {% if item.is_section %}
+        {% set index.icon = "section" %}
+        {% for child in item.children if child.is_index %}
+            {% set index.obj = child %}
+        {% endfor %}
+    {% endif %}
+    {# create list item #}
+    {% if item != page.parent.children[0] %}
+    <li class="torillic-toc-{{ index.icon }}">
+        <a href="{{ index.obj.url | url }}">{{ index.obj.title }}</a>
+    </li>
+    {% endif %}
+{% endfor %}
+</blockquote>
