@@ -15,7 +15,7 @@ Download = "https://github.com/TEParsons/mkdocs-torillic/releases"
 packages = ["mkdocs_torillic"]
 
 [tool.setuptools.package-data]
-mkdocs_torillic = ["**/*.html", "**/*.css", "**/*.yml", "**/*.jpg", "**/*.png", "**/*.json", "**/*.ttf"]
+mkdocs_torillic = ["**/*.py", "**/*.html", "**/*.css", "**/*.yml", "**/*.jpg", "**/*.png", "**/*.json", "**/*.ttf"]
 
 [project.entry-points."mkdocs.themes"]
 torillic = "mkdocs_torillic"
