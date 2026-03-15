@@ -21,6 +21,8 @@ markdown_extensions:
   - md_in_html 
 # tell mkdocs what plugins to use
 plugins:
+  # built-in full-text search index and frontend assets
+  - search
   # awesome-pages works well Torillic's contents pages as it allows an automatic nav to be generated from file structure
   - awesome-pages
   # the torillic-statblock plugin enables the "statblock" language for code blocks

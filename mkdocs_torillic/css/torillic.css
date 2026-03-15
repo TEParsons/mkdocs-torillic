@@ -9,6 +9,10 @@ body {
     margin: 0;
 }
 
+[hidden] {
+    display: none !important;
+}
+
 blockquote.torillic-toc {
     display: flex;
     flex-direction: column;
@@ -35,6 +39,177 @@ li.torillic-toc-page::marker {
     padding: 4rem;
 }
 
+.torillic-search-shell {
+    position: relative;
+    width: 21cm;
+    max-width: calc(100% - 4cm - 8rem);
+    margin: 1rem auto 0;
+}
+
+.torillic-search-form {
+    display: grid;
+    gap: 0.35rem;
+}
+
+.torillic-search-label {
+    color: white;
+    font-family: var(--head);
+    font-size: 1rem;
+    font-variant: small-caps;
+    letter-spacing: 0.08em;
+    text-shadow: 1mm 1mm 2mm rgba(0, 0, 0, 0.45);
+}
+
+.torillic-search-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 0.75rem;
+    align-items: center;
+}
+
+.torillic-search-input,
+.torillic-search-button {
+    border: 2px solid var(--yellow);
+    border-radius: 999px;
+    font-family: var(--body);
+    font-size: 1rem;
+}
+
+.torillic-search-input {
+    width: 100%;
+    padding: 0.8rem 1.1rem;
+    color: var(--red);
+    background:
+        linear-gradient(rgba(252, 245, 229, 0.98), rgba(252, 245, 229, 0.94)),
+        url("torillic/assets/paper-texture.png");
+    box-shadow: 0 0.35rem 1rem rgba(0, 0, 0, 0.25);
+}
+
+.torillic-search-input::placeholder {
+    color: rgba(130, 32, 0, 0.7);
+}
+
+.torillic-search-input:focus {
+    outline: 2px solid var(--green);
+    outline-offset: 2px;
+}
+
+.torillic-search-button {
+    padding: 0.8rem 1.4rem;
+    color: white;
+    background: linear-gradient(180deg, #9b350f 0%, var(--red) 100%);
+    cursor: pointer;
+    box-shadow: 0 0.35rem 1rem rgba(0, 0, 0, 0.25);
+}
+
+.torillic-search-button:hover {
+    border-color: var(--green);
+}
+
+.torillic-search-panel {
+    position: absolute;
+    top: calc(100% + 0.6rem);
+    left: 0;
+    right: 0;
+    z-index: 20;
+    padding: 1rem 1.25rem;
+    background-image: url("torillic/assets/paper-texture.png");
+    background-color: var(--offwhite);
+    border: 2px solid var(--yellow);
+    box-shadow:
+        inset 0 0 0.1cm 0.05cm rgba(0, 0, 0, 0.1),
+        0 0.75rem 1.5rem rgba(0, 0, 0, 0.35);
+}
+
+.torillic-search-suggest {
+    position: absolute;
+    top: calc(100% + 0.6rem);
+    left: 0;
+    right: 0;
+    z-index: 25;
+    display: grid;
+    gap: 0.35rem;
+    padding: 0.8rem;
+    background-image: url("torillic/assets/paper-texture.png");
+    background-color: var(--offwhite);
+    border: 2px solid var(--yellow);
+    box-shadow:
+        inset 0 0 0.1cm 0.05cm rgba(0, 0, 0, 0.1),
+        0 0.75rem 1.5rem rgba(0, 0, 0, 0.35);
+}
+
+.torillic-search-suggest-item {
+    display: grid;
+    gap: 0.15rem;
+    padding: 0.6rem 0.75rem;
+    text-decoration: none;
+    border-radius: 0.4rem;
+}
+
+.torillic-search-suggest-item:hover {
+    background: rgba(224, 229, 193, 0.75);
+}
+
+.torillic-search-suggest-item strong {
+    font-family: var(--head);
+    font-size: 1.1rem;
+}
+
+.torillic-search-suggest-item span {
+    color: inherit;
+    font-size: 0.95rem;
+}
+
+.torillic-search-results {
+    display: grid;
+    gap: 0.85rem;
+    max-height: min(55vh, 28rem);
+    overflow-y: auto;
+    color: var(--text-color);
+}
+
+.torillic-search-results article {
+    break-inside: avoid;
+    padding-bottom: 0.85rem;
+    border-bottom: 1px solid rgba(201, 173, 106, 0.7);
+}
+
+.torillic-search-results a,
+.torillic-search-results a:visited,
+.torillic-search-results p,
+.torillic-search-suggest,
+.torillic-search-suggest a,
+.torillic-search-suggest a:visited,
+.torillic-search-suggest span {
+    color: var(--text-color);
+}
+
+.torillic-search-results strong,
+.torillic-search-results h3,
+.torillic-search-suggest strong {
+    color: var(--red);
+}
+
+.torillic-search-results article:last-child {
+    border-bottom: 0;
+    padding-bottom: 0;
+}
+
+.torillic-search-results h3 {
+    margin: 0 0 0.2rem;
+    font-size: 1.3rem;
+}
+
+.torillic-search-results p {
+    margin: 0;
+}
+
+mark {
+    padding: 0 0.12rem;
+    background: linear-gradient(180deg, rgba(224, 229, 193, 0.55), rgba(201, 173, 106, 0.75));
+    color: var(--red);
+}
+
 .torillic-backlink {
     position: absolute;
     top: 1cm;
@@ -47,6 +222,24 @@ li.torillic-toc-page::marker {
     opacity: 100%;
 }
 
+@media screen and (max-width: 836px) {
+    .torillic-background {
+        padding: 1rem;
+    }
+
+    .torillic-search-shell {
+        width: calc(100% - 1rem - 4cm);
+        max-width: none;
+    }
+
+    .torillic-search-row {
+        grid-template-columns: 1fr;
+    }
+
+    .torillic-search-suggest-item strong {
+        font-size: 1rem;
+    }
+}
 
 @media print {
     .torillic-backlink {
