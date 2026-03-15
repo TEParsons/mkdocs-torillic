@@ -3,6 +3,7 @@
 
 <head>
   <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{% if page.title %}{{ page.title }} - {% endif %}{{ config.site_name }}</title>
   <link rel="icon" type="image/x-icon" href="{{ config.theme.favicon | url }}">
   <link href="{{ 'css/torillic.css'|url }}" rel="stylesheet">
@@ -40,6 +41,39 @@
       {% endif %}
       {% endfor %}
     </nav>
+    {% if 'search' in config.plugins %}
+    <div class="torillic-search-shell">
+      <form class="torillic-search-form" role="search" onsubmit="return false;">
+        <label class="torillic-search-label" for="mkdocs-search-query">Search the archive</label>
+        <div class="torillic-search-row">
+          <input
+            type="search"
+            id="mkdocs-search-query"
+            class="torillic-search-input"
+            placeholder="Search monsters, NPCs, places..."
+            title="Type search term here"
+            autocomplete="off"
+          >
+          <button
+            type="button"
+            class="torillic-search-button"
+            aria-label="Toggle search results"
+            onclick="toggleSearchResults()"
+          >
+            Search
+          </button>
+        </div>
+      </form>
+      <div id="torillic-search-suggest" class="torillic-search-suggest" hidden></div>
+      <div id="torillic-search-panel" class="torillic-search-panel" hidden aria-live="polite">
+        <div
+          id="mkdocs-search-results"
+          class="torillic-search-results"
+          data-no-results-text="No results found"
+        ></div>
+      </div>
+    </div>
+    {% endif %}
   </header>
   <main class="torillic-page">
     {# add page content #}
@@ -61,9 +95,277 @@
     {% endif %}
   </main>
   
+  {% if 'search' in config.plugins %}
+  <script>
+    var base_url = {{ base_url|tojson }};
+  </script>
+  {% endif %}
   {%- for script in config.extra_javascript %}
   {{ script | script_tag }}
   {%- endfor %}
+  {% if 'search' in config.plugins %}
+  <script>
+    var torillicSearchDocs = [];
+
+    function toggleSearchResults(forceOpen) {
+      var panel = document.getElementById("torillic-search-panel");
+      if (!panel) {
+        return;
+      }
+
+      var shouldOpen = forceOpen;
+      if (typeof shouldOpen !== "boolean") {
+        shouldOpen = panel.hidden;
+      }
+
+      panel.hidden = !shouldOpen;
+    }
+
+    function toggleSearchSuggest(forceOpen) {
+      var panel = document.getElementById("torillic-search-suggest");
+      if (!panel) {
+        return;
+      }
+
+      panel.hidden = !forceOpen;
+    }
+
+    function escapeHtml(value) {
+      return value.replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/\"/g, "&quot;");
+    }
+
+    function escapeRegExp(value) {
+      return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    }
+
+    function joinTorillicUrl(base, path) {
+      if (!path) {
+        return base || ".";
+      }
+      if (path.substring(0, 1) === "/") {
+        return path;
+      }
+      if (!base || base === ".") {
+        return path;
+      }
+      if (base.substring(base.length - 1) === "/") {
+        return base + path;
+      }
+      return base + "/" + path;
+    }
+
+    function summarizeSuggestion(doc, query) {
+      var text = doc.text || "";
+      var normalized = text.toLowerCase();
+      var index = normalized.indexOf(query.toLowerCase());
+      if (index === -1) {
+        return text.slice(0, 120).trim();
+      }
+      var start = Math.max(0, index - 40);
+      var end = Math.min(text.length, index + query.length + 70);
+      return text.slice(start, end).trim();
+    }
+
+    function buildSuggestions(query) {
+      var normalized = query.trim().toLowerCase();
+      if (normalized.length < 2) {
+        return [];
+      }
+
+      var seen = new Set();
+      return torillicSearchDocs
+        .filter(function (doc) {
+          var title = (doc.title || "").toLowerCase();
+          var text = (doc.text || "").toLowerCase();
+          return title.indexOf(normalized) !== -1 || text.indexOf(normalized) !== -1;
+        })
+        .filter(function (doc) {
+          if (seen.has(doc.location)) {
+            return false;
+          }
+          seen.add(doc.location);
+          return true;
+        })
+        .sort(function (a, b) {
+          var aTitle = (a.title || "").toLowerCase();
+          var bTitle = (b.title || "").toLowerCase();
+          var aStarts = aTitle.indexOf(normalized) === 0 ? 0 : 1;
+          var bStarts = bTitle.indexOf(normalized) === 0 ? 0 : 1;
+          if (aStarts !== bStarts) {
+            return aStarts - bStarts;
+          }
+          return aTitle.localeCompare(bTitle);
+        })
+        .slice(0, 6);
+    }
+
+    function renderSuggestions(query) {
+      var suggest = document.getElementById("torillic-search-suggest");
+      if (!suggest) {
+        return;
+      }
+
+      var suggestions = buildSuggestions(query);
+      if (!suggestions.length) {
+        suggest.innerHTML = "";
+        toggleSearchSuggest(false);
+        return;
+      }
+
+      var pattern = new RegExp("(" + escapeRegExp(query.trim()) + ")", "ig");
+      var items = suggestions.map(function (doc, index) {
+        var title = escapeHtml(doc.title || "Untitled").replace(pattern, "<mark>$1</mark>");
+        var summary = escapeHtml(summarizeSuggestion(doc, query)).replace(pattern, "<mark>$1</mark>");
+        var href = joinTorillicUrl(base_url, doc.location) + "?q=" + encodeURIComponent(query.trim());
+        return [
+          '<a class="torillic-search-suggest-item" href="', href, '" data-suggest-index="', String(index), '">',
+          '<strong>', title, '</strong>',
+          '<span>', summary, '</span>',
+          "</a>"
+        ].join("");
+      });
+
+      suggest.innerHTML = items.join("");
+      toggleSearchSuggest(true);
+    }
+
+    function highlightSearchTerms() {
+      var query = new URLSearchParams(window.location.search).get("q");
+      if (!query) {
+        return;
+      }
+
+      var terms = query.trim().split(/\s+/).filter(function (term) {
+        return term.length >= 2;
+      });
+      if (!terms.length) {
+        return;
+      }
+
+      var root = document.querySelector(".torillic-page");
+      if (!root) {
+        return;
+      }
+
+      var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+        acceptNode: function (node) {
+          if (!node.nodeValue.trim()) {
+            return NodeFilter.FILTER_REJECT;
+          }
+          if (node.parentElement && /^(SCRIPT|STYLE|MARK)$/.test(node.parentElement.tagName)) {
+            return NodeFilter.FILTER_REJECT;
+          }
+          return NodeFilter.FILTER_ACCEPT;
+        }
+      });
+
+      var textNodes = [];
+      while (walker.nextNode()) {
+        textNodes.push(walker.currentNode);
+      }
+
+      var pattern = new RegExp("(" + terms.map(escapeRegExp).join("|") + ")", "ig");
+      textNodes.forEach(function (node) {
+        if (!pattern.test(node.nodeValue)) {
+          return;
+        }
+        pattern.lastIndex = 0;
+        var wrapper = document.createElement("span");
+        wrapper.innerHTML = escapeHtml(node.nodeValue).replace(pattern, "<mark>$1</mark>");
+        node.parentNode.replaceChild(wrapper, node);
+      });
+    }
+
+    function appendQueryToResultLinks(query) {
+      var searchResults = document.getElementById("mkdocs-search-results");
+      if (!searchResults || !query.trim()) {
+        return;
+      }
+
+      searchResults.querySelectorAll("a[href]").forEach(function (link) {
+        var targetUrl = new URL(link.getAttribute("href"), window.location.href);
+        targetUrl.searchParams.set("q", query.trim());
+        link.setAttribute("href", targetUrl.pathname + targetUrl.search + targetUrl.hash);
+      });
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+      var searchShell = document.querySelector(".torillic-search-shell");
+      var searchInput = document.getElementById("mkdocs-search-query");
+      var searchResults = document.getElementById("mkdocs-search-results");
+      var searchSuggest = document.getElementById("torillic-search-suggest");
+
+      if (!searchShell || !searchInput || !searchResults) {
+        return;
+      }
+
+      fetch(joinTorillicUrl(base_url, "search/search_index.json"))
+        .then(function (response) { return response.json(); })
+        .then(function (data) {
+          torillicSearchDocs = data.docs || [];
+          var query = searchInput.value.trim();
+          if (query.length >= 2) {
+            renderSuggestions(query);
+          }
+        })
+        .catch(function () {
+          torillicSearchDocs = [];
+        });
+
+      searchInput.addEventListener("focus", function () {
+        toggleSearchResults(true);
+        if (searchInput.value.trim().length >= 2) {
+          renderSuggestions(searchInput.value);
+        }
+      });
+
+      searchInput.addEventListener("input", function () {
+        toggleSearchResults(true);
+        renderSuggestions(searchInput.value);
+      });
+
+      var searchObserver = new MutationObserver(function () {
+        appendQueryToResultLinks(searchInput.value);
+      });
+      searchObserver.observe(searchResults, { childList: true, subtree: true });
+
+      if (new URLSearchParams(window.location.search).get("q")) {
+        toggleSearchResults(true);
+      }
+
+      document.addEventListener("click", function (event) {
+        if (!searchShell.contains(event.target)) {
+          toggleSearchResults(false);
+          toggleSearchSuggest(false);
+        }
+      });
+
+      document.addEventListener("keydown", function (event) {
+        if (event.key === "Escape") {
+          toggleSearchResults(false);
+          toggleSearchSuggest(false);
+        }
+      });
+
+      searchResults.addEventListener("click", function (event) {
+        if (event.target.closest("a")) {
+          toggleSearchResults(false);
+        }
+      });
+
+      if (searchSuggest) {
+        searchSuggest.addEventListener("click", function () {
+          toggleSearchSuggest(false);
+        });
+      }
+
+      highlightSearchTerms();
+    });
+  </script>
+  {% endif %}
 </body>
 
 </html>

@@ -11,6 +11,20 @@ pip install mkdocs-torillic
 
 Alternatively, you can clone/download this repo and either store it in your Python path or use `pip install <path to your local folder>`. If you do so, just remember to use the `last-release` branch rather than `main` - the base theme is copied over from [here](https://github.com/TEParsons/torillic) when a release is built, so in the `main` (development) branch there's just a file called `torillic.stub` in its place.
 
+## Search
+Torillic can use MkDocs' built-in `search` plugin and render it in the theme header as a themed search bar with:
+- inline result display
+- partial-match suggestions
+- in-page highlighting when a suggestion is followed
+
+To enable it in your `mkdocs.yml`, include `search` in the plugin list:
+```yaml
+plugins:
+  - search
+```
+
+The example site in this repository also enables `search` in [`mkdocs.yml`](mkdocs.yml).
+
 ## Theme configuration
 Torillic accepts the following theme configuration options in the `mkdocs.yaml` file:
 
