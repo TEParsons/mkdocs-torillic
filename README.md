@@ -11,6 +11,36 @@ pip install mkdocs-torillic
 
 Alternatively, you can clone/download this repo and either store it in your Python path or use `pip install <path to your local folder>`. If you do so, just remember to use the `last-release` branch rather than `main` - the base theme is copied over from [here](https://github.com/TEParsons/torillic) when a release is built, so in the `main` (development) branch there's just a file called `torillic.stub` in its place.
 
+### Local development with `uv`
+If you want to run this repository locally with [`uv`](https://docs.astral.sh/uv/), the minimal workflow is:
+```
+uv venv
+source .venv/bin/activate
+uv pip install -e .
+uv pip install mkdocs mkdocs-awesome-pages-plugin
+uv run mkdocs serve
+```
+
+This uses the local [`mkdocs.yml`](mkdocs.yml) configuration, serves content from `docs_src`, and makes the site available at `http://127.0.0.1:8000`.
+
+To build the static site without starting the dev server, run:
+```
+uv run mkdocs build
+```
+
+This writes the generated site to `docs/`, because [`mkdocs.yml`](mkdocs.yml) sets `site_dir: docs`.
+
+If you want to copy the generated site somewhere else after a build, use:
+```
+cp -R docs/ /path/to/output/
+```
+
+If you want a fresh output directory before rebuilding, remove the old build and run the build again:
+```
+rm -rf docs/
+uv run mkdocs build
+```
+
 ## Theme configuration
 Torillic accepts the following theme configuration options in the `mkdocs.yaml` file:
 
