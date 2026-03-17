@@ -1,0 +1,50 @@
+{% set items = namespace(sections=[], pages=[]) %}
+
+{# sort children into pages and sections #}
+{% for item in nav %}
+    {% if item.is_section %}
+        {% set items.sections = items.sections + [item] %}
+    {% elif item != page %}
+        {% set items.pages = items.pages + [item] %}
+    {% endif %}
+{% endfor %}
+
+{# add heading #}
+<h3>{{config.extra.toc_heading or "Contents"}}</h3>
+
+{# add standalone pages first #}
+{% if nav_pages|length %}
+<blockquote style="break-inside: avoid;">
+    {% for item in items.pages %}
+    <li>
+        <a href="{{ item.url | url }}">{{ item.title }}</a>
+    </li>
+    {% endfor %}
+</blockquote>
+{% endif %}
+
+{# add sections #}
+{% for item in items.sections %}
+<h4>
+    <a href="{{ item.children[0].url | url }}">{{ item.title }}</a>
+</h4>
+<blockquote class=torillic-toc>
+    {% for subitem in item.children %}
+        {# use a namespace so that we can set stuff within a sub-for loop #}
+        {% set index = namespace(obj=subitem, icon="page") %}
+        {# if subitem is a section, navigate to its index page #}
+        {% if subitem.is_section %}
+            {% set index.icon = "section" %}
+            {% for child in subitem.children if child.is_index %}
+                {% set index.obj = child %}
+            {% endfor %}
+        {% endif %}
+        {# create list item #}
+        {% if subitem != item.children[0] %}
+    <li class="torillic-toc-{{ index.icon }}">
+        <a href="{{ index.obj.url | url }}">{{ index.obj.title }}</a>
+    </li>
+        {% endif %}
+    {% endfor %}
+</blockquote>
+{% endfor %}

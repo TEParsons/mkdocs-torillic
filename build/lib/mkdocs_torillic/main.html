@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>{% if page.title %}{{ page.title }} - {% endif %}{{ config.site_name }}</title>
+  <link rel="icon" type="image/x-icon" href="{{ config.theme.favicon | url }}">
+  <link href="{{ 'css/torillic.css'|url }}" rel="stylesheet">
+  {%- for path in config.extra_css %}
+  <link href="{{ path | url }}" rel="stylesheet">
+  {%- endfor %}
+  <style>
+    .torillic-background {
+      {% if config.theme.background_image %}
+      background-image: url("{{ config.theme.background_image | url }}");
+      {% endif %}
+    }
+  </style>
+  <script>
+    function toggleSpoiler(element) {
+      // add/remove "hidden" class
+      if (element.classList.contains("hidden")) {
+        element.classList.remove("hidden");
+      } else {
+        element.classList.add("hidden");
+      }
+    }
+  </script>
+</head>
+
+<body class="torillic-background">
+  <header class="torillic-header">
+    <h1>{{ config.site_name }}</h1>
+    <nav>
+      {% for nav_item in nav %}
+      {% if nav_item.children and not nav_item.url %}
+      <a class="{% if nav_item.active %}current{% endif %}" href="{{ nav_item.children[0].url|url }}">{{nav_item.title }}</a>
+      {% else %}
+      <a class="{% if nav_item.active %}current{% endif %}" href="{{ nav_item.url|url }}">{{nav_item.title }}</a>
+      {% endif %}
+      {% endfor %}
+    </nav>
+  </header>
+  <main class="torillic-page">
+    {# add page content #}
+    {{ page.content }}
+
+    {# add global contents on the root page, unless told not to #}
+    {% if page.meta.contents == "global" or ( page.is_homepage and page.meta.contents not in ("local", "none") )  %}
+    {% include "partials/global_contents.html" %}
+
+    {# add local contents on section homepages, unless told not to #}
+    {% elif page.meta.contents == "local" or ( page.parent and page == page.parent.children[0] and page.meta.contents not in ("global", "none") ) %}
+    {% include "partials/local_contents.html" %}
+
+    {% endif %}
+    
+    {# add a back arrow if there's a parent to go back to #}
+    {% if page.parent %}
+    {% include "partials/backlink.html" %}
+    {% endif %}
+  </main>
+  
+  {%- for script in config.extra_javascript %}
+  {{ script | script_tag }}
+  {%- endfor %}
+</body>
+
+</html>
