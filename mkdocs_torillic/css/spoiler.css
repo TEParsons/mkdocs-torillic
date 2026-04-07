@@ -7,6 +7,10 @@
     color: var(--spoiler-color);
     background-color: var(--spoiler-color);
   }
+  .spoiler.hidden mark {
+    color: var(--spoiler-color);
+    background: var(--spoiler-color);
+  }
   .spoiler.hidden::selection {
     color: var(--spoiler-color);
     background-color: transparent;
